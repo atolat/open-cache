@@ -1,0 +1,50 @@
+/* GitHub Dark / VS Code inspired overrides */
+
+:root {
+  --md-code-bg-color: #0d1117;
+  --md-code-fg-color: #c9d1d9;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #0d1117;
+  --md-default-fg-color--light: #8b949e;
+}
+
+/* Code blocks */
+.highlight code,
+code {
+  font-size: 0.82rem;
+}
+
+.highlight {
+  background: #0d1117 !important;
+  border: 1px solid #21262d;
+  border-radius: 6px;
+}
+
+/* Inline code -- green on dark, terminal style */
+.md-typeset code:not(.highlight code) {
+  background: #161b22;
+  color: #7ee787;
+  border: 1px solid #21262d;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+/* Links */
+.md-typeset a {
+  color: #58a6ff;
+}
+
+/* Tables */
+.md-typeset table:not([class]) th {
+  background-color: #161b22;
+}
+
+.md-typeset table:not([class]) tr:nth-child(even) {
+  background-color: #0d1117;
+}
+
+.md-typeset table:not([class]) tr:nth-child(odd) {
+  background-color: #161b22;
+}

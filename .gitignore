@@ -1,0 +1,38 @@
+# MkDocs build output
+site/
+
+# Reference repos (cloned for analysis, not part of project)
+nativelink-src/
+_buildfarm_analysis/
+
+# Claude Code local state
+.claude/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work.sum
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
