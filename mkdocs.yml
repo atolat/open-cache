@@ -37,16 +37,15 @@ markdown_extensions:
   - tables
   - admonition
 
+exclude_docs: |
+  RESEARCH.md
+  ANALYSIS_*.md
+
 nav:
   - Home: index.md
   - Learning Journal:
     - Content Addressable Storage: learning/01-content-addressable-storage.md
   - Design:
-    - Project Brief: PROJECT_BRIEF.md
-    - AI/RL Architecture: ARCHITECTURE_AI.md
+    - Design Document: PROJECT_BRIEF.md
+    - RL Eviction + Agents: ARCHITECTURE_AI.md
     - Testing Strategy: TESTING_STRATEGY.md
-  - Research:
-    - Ecosystem Analysis: RESEARCH.md
-    - NativeLink Analysis: ANALYSIS_NATIVELINK.md
-    - Buildbarn Analysis: ANALYSIS_BUILDBARN.md
-    - Buildfarm Analysis: ANALYSIS_BUILDFARM.md
