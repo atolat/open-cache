@@ -1,0 +1,10 @@
+s3:
+  bucket: open-cache-bazel
+  region: us-east-1
+
+envoy:
+  image: envoyproxy/envoy:v1.32-latest
+  port: 8080
+
+nlb:
+  certificateArn: ""

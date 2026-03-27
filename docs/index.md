@@ -5,6 +5,7 @@ Building a remote build cache from scratch — one concept at a time.
 ## Learning Journal
 
 - [Content Addressable Storage](learning/01-content-addressable-storage.md)
+- [Bazel Remote Cache Protocol](learning/02-bazel-remote-cache-protocol.md)
 
 ## Design
 

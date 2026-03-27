@@ -1,0 +1,4 @@
+apiVersion: v2
+name: open-cache
+description: Envoy proxy for Bazel remote cache backed by S3
+version: 0.1.0
