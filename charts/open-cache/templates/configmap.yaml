@@ -1,54 +1,8 @@
+{{- $s3Host := printf "%s.s3.%s.amazonaws.com" .Values.s3.bucket .Values.s3.region -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-envoy
 data:
   envoy.yaml: |
-    static_resources:
-      listeners:
-        - name: cache_listener
-          address:
-            socket_address:
-              address: 0.0.0.0
-              port_value: {{ .Values.envoy.port }}
-          filter_chains:
-            - filters:
-                - name: envoy.filters.network.http_connection_manager
-                  typed_config:
-                    "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
-                    stat_prefix: cache
-                    route_config:
-                      name: s3_route
-                      virtual_hosts:
-                        - name: s3_backend
-                          domains: ["*"]
-                          routes:
-                            - match:
-                                prefix: "/"
-                              route:
-                                cluster: s3
-                                host_rewrite_literal: {{ .Values.s3.bucket }}.s3.{{ .Values.s3.region }}.amazonaws.com
-                    http_filters:
-                      - name: envoy.filters.http.router
-                        typed_config:
-                          "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
-
-      clusters:
-        - name: s3
-          type: LOGICAL_DNS
-          connect_timeout: 5s
-          dns_lookup_family: V4_ONLY
-          load_assignment:
-            cluster_name: s3
-            endpoints:
-              - lb_endpoints:
-                  - endpoint:
-                      address:
-                        socket_address:
-                          address: {{ .Values.s3.bucket }}.s3.{{ .Values.s3.region }}.amazonaws.com
-                          port_value: 443
-          transport_socket:
-            name: envoy.transport_sockets.tls
-            typed_config:
-              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
-              sni: {{ .Values.s3.bucket }}.s3.{{ .Values.s3.region }}.amazonaws.com
+{{ .Files.Get "config/envoy.yaml" | replace "__ENVOY_PORT__" (toString .Values.envoy.port) | replace "__S3_HOST__" $s3Host | indent 4 }}
