@@ -74,4 +74,4 @@ S3_BUCKET=my-bucket S3_REGION=us-east-1 ./open-cache
 
 ## Docs
 
-https://atolat.github.io/open-cache
+https://open-cache.io
