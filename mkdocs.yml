@@ -51,3 +51,4 @@ nav:
     - Design Document: PROJECT_BRIEF.md
     - RL Eviction + Agents: ARCHITECTURE_AI.md
     - Testing Strategy: TESTING_STRATEGY.md
+  - Changelog: CHANGELOG.md
