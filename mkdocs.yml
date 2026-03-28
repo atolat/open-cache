@@ -44,6 +44,7 @@ exclude_docs: |
 
 nav:
   - Home: index.md
+  - Getting Started: getting-started.md
   - Learning Journal:
     - Content Addressable Storage: learning/01-content-addressable-storage.md
     - Bazel Remote Cache Protocol: learning/02-bazel-remote-cache-protocol.md

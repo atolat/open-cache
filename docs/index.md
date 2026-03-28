@@ -2,11 +2,7 @@
 
 S3-primary remote build cache for Bazel.
 
-## Install
-
-```bash
-helm install open-cache oci://ghcr.io/atolat/charts/open-cache
-```
+**[Getting Started](getting-started.md)** — install, configure, point Bazel at it.
 
 See [Changelog](CHANGELOG.md) for the latest release.
 
