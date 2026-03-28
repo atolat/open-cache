@@ -1,5 +1,6 @@
 # open-cache
 
+[![Build](https://github.com/atolat/open-cache/actions/workflows/build.yml/badge.svg)](https://github.com/atolat/open-cache/actions/workflows/build.yml)
 [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/open-cache)](https://artifacthub.io/packages/search?repo=open-cache)
 
 S3-primary remote build cache for Bazel. Go. Apache 2.0.
