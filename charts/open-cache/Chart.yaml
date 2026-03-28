@@ -1,4 +1,10 @@
 apiVersion: v2
 name: open-cache
-description: Envoy proxy for Bazel remote cache backed by S3
+description: S3-primary remote build cache for Bazel
 version: 0.1.0
+home: https://open-cache.io
+sources:
+  - https://github.com/atolat/open-cache
+maintainers:
+  - name: atolat
+    url: https://github.com/atolat
