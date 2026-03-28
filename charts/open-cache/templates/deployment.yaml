@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-envoy
+  name: {{ .Release.Name }}-server
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}-envoy
+      app: {{ .Release.Name }}-server
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-envoy
+        app: {{ .Release.Name }}-server
     spec:
       containers:
-        - name: envoy
-          image: {{ .Values.envoy.image }}
+        - name: open-cache
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           ports:
-            - containerPort: {{ .Values.envoy.port }}
-          volumeMounts:
-            - name: config
-              mountPath: /etc/envoy
+            - containerPort: {{ .Values.server.port }}
+          env:
+            - name: S3_BUCKET
+              value: {{ .Values.s3.bucket | quote }}
+            - name: S3_REGION
+              value: {{ .Values.s3.region | quote }}
+            - name: LISTEN_ADDR
+              value: ":{{ .Values.server.port }}"
           resources:
             requests:
               cpu: 100m
               memory: 128Mi
             limits:
-              cpu: 500m
-              memory: 256Mi
-      volumes:
-        - name: config
-          configMap:
-            name: {{ .Release.Name }}-envoy
+              cpu: "2"
+              memory: 1Gi

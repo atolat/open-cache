@@ -42,3 +42,4 @@ terraform/.terraform.lock.hcl
 # OS
 .DS_Store
 Thumbs.db
+server/open-cache

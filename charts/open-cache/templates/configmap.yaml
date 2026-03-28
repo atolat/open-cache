@@ -1,8 +1,0 @@
-{{- $s3Host := printf "%s.s3.%s.amazonaws.com" .Values.s3.bucket .Values.s3.region -}}
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ .Release.Name }}-envoy
-data:
-  envoy.yaml: |
-{{ .Files.Get "config/envoy.yaml" | replace "__ENVOY_PORT__" (toString .Values.envoy.port) | replace "__S3_HOST__" $s3Host | indent 4 }}
