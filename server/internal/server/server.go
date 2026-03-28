@@ -10,6 +10,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
@@ -33,9 +34,18 @@ func NewWithEndpoint(bucket, region, endpoint string) (*Server, error) {
 }
 
 func newServer(bucket, region string, endpoint *string) (*Server, error) {
-	cfg, err := config.LoadDefaultConfig(context.Background(),
+	configOpts := []func(*config.LoadOptions) error{
 		config.WithRegion(region),
-	)
+	}
+	// When using a custom endpoint (testing/MinIO), use static dummy
+	// credentials so the SDK doesn't try to reach EC2 IMDS.
+	if endpoint != nil {
+		configOpts = append(configOpts,
+			config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider("test", "test", "")),
+		)
+	}
+
+	cfg, err := config.LoadDefaultConfig(context.Background(), configOpts...)
 	if err != nil {
 		return nil, err
 	}
