@@ -3,6 +3,7 @@ name: open-cache
 description: S3-primary remote build cache for Bazel
 version: 0.1.0
 home: https://open-cache.io
+icon: https://open-cache.io/assets/icon.svg
 sources:
   - https://github.com/atolat/open-cache
 maintainers:
