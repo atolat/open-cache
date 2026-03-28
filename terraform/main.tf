@@ -105,3 +105,26 @@ resource "aws_acm_certificate_validation" "cache" {
   certificate_arn         = aws_acm_certificate.cache.arn
   validation_record_fqdns = [for r in aws_route53_record.cert_validation : r.fqdn]
 }
+
+# ---------- open-cache.io -> GitHub Pages ----------
+
+resource "aws_route53_record" "apex" {
+  zone_id = aws_route53_zone.main.zone_id
+  name    = var.domain
+  type    = "A"
+  ttl     = 300
+  records = [
+    "185.199.108.153",
+    "185.199.109.153",
+    "185.199.110.153",
+    "185.199.111.153",
+  ]
+}
+
+resource "aws_route53_record" "www" {
+  zone_id = aws_route53_zone.main.zone_id
+  name    = "www.${var.domain}"
+  type    = "CNAME"
+  ttl     = 300
+  records = ["atolat.github.io"]
+}

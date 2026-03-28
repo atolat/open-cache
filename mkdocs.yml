@@ -1,6 +1,7 @@
 site_name: open-cache
 site_description: Building a remote build cache from scratch — learning journal + design docs
 site_url: https://open-cache.io
+repo_url: https://github.com/atolat/open-cache
 
 docs_dir: docs
 
