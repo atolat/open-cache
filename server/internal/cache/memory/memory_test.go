@@ -123,6 +123,24 @@ func TestEvictionRespectsAccessOrder(t *testing.T) {
 	}
 }
 
+func TestBlobLargerThanCache(t *testing.T) {
+	// Cache max is 10 bytes. A 20-byte blob should be silently rejected.
+	store := memory.New(10, evictor.NewLRU())
+
+	store.Put("small", []byte("12345")) // 5 bytes — fits
+	store.Put("huge", []byte("12345678901234567890")) // 20 bytes — too big
+
+	if !store.Has("small") {
+		t.Error("'small' should still exist")
+	}
+	if store.Has("huge") {
+		t.Error("'huge' should have been rejected (larger than cache)")
+	}
+	if store.Size() != 5 {
+		t.Errorf("Size = %d, want 5", store.Size())
+	}
+}
+
 func TestConcurrentAccess(t *testing.T) {
 	store := memory.New(1024*1024, evictor.NewLRU()) // 1MB
 

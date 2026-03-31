@@ -57,6 +57,11 @@ func (s *Store) Put(key string, value []byte) {
 
 	size := int64(len(value))
 
+	// Reject blobs that will never fit, even in an empty cache.
+	if size > s.maxBytes {
+		return
+	}
+
 	// If the key already exists, subtract its old size first.
 	if old, exists := s.data[key]; exists {
 		s.curBytes -= int64(len(old))
