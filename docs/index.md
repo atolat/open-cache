@@ -10,6 +10,7 @@ See [Changelog](CHANGELOG.md) for the latest release.
 
 - [Content Addressable Storage](learning/01-content-addressable-storage.md)
 - [Bazel Remote Cache Protocol](learning/02-bazel-remote-cache-protocol.md)
+- [Distributed Caching Design](learning/03-distributed-caching-design.md)
 
 ## Design
 
