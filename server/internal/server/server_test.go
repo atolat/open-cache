@@ -20,7 +20,13 @@ func newTestServer(t *testing.T) (*server.Server, *fakeS3) {
 	ts := httptest.NewServer(fake)
 	t.Cleanup(ts.Close)
 
-	srv, err := server.NewWithEndpoint("test-bucket", "us-east-1", ts.URL)
+	srv, err := server.New(server.Config{
+		Bucket:        "test-bucket",
+		Region:        "us-east-1",
+		Endpoint:      ts.URL,
+		L1MaxBytes:    64 * 1024 * 1024, // 64 MiB for tests
+		L1MaxBlobSize: 1 * 1024 * 1024,  // 1 MiB
+	})
 	if err != nil {
 		t.Fatalf("failed to create server: %v", err)
 	}
