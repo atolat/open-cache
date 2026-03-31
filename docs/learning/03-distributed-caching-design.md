@@ -110,3 +110,38 @@ An in-memory KV store requires:
 None of these are complex individually. The reason distributed caches are
 hard in general (consensus, conflict resolution, split-brain) doesn't apply
 here because our entries are immutable and content-addressed.
+
+## Approximate LRU (Redis Approach)
+
+A naive LRU uses a linked list reordered on every access. Under thousands
+of concurrent reads, the lock protecting the list becomes a bottleneck —
+every reader contends on it just to update ordering.
+
+Redis solved this with **approximate LRU**:
+
+- Each key stores a last-access timestamp (atomic int64, no lock needed)
+- On eviction, sample N random keys (default 10), evict the oldest
+- No linked list, no reordering, no lock on the read path
+
+With 10 samples, eviction quality is nearly identical to true LRU.
+Redis tested this extensively and documented the results.
+
+**Our read path under this approach:**
+
+```
+Get(key) →
+  1. RLock the hashmap (many concurrent readers allowed)
+  2. Look up the key
+  3. Atomic timestamp write (no lock, no contention)
+  4. Return the value
+```
+
+Compare to the naive approach where step 3 would be "acquire a
+separate mutex, move a linked list node, release mutex." Under
+1000s of concurrent reads, that's the difference between scaling
+and not.
+
+The eviction accuracy tradeoff: a key accessed 1ms before eviction
+might not be saved because the sampler didn't pick it. For a cache
+with S3 as the durable fallback, this is acceptable — a false eviction
+just means one extra S3 fetch to repopulate.
